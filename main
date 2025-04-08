@@ -1,0 +1,21 @@
+import requests
+
+#collect inputs
+country = input("Enter your country name: ") 
+name= input("Enter uni name to search: ")
+
+#API import part
+#---------------
+url=f"http://universities.hipolabs.com/search?country={country}"
+response = requests.get(url)
+#--------------
+
+if response.status_code == 200: # Check status code 
+    data = response.json()
+    print(f"Universities in {country}: ")
+    for i in data:
+        if name.lower() in i["name"].lower(): #lower filter will let skip big and small letters
+            print (f"- {i["name"]} | {i["web_pages"][0]}") 
+
+else:
+    print("Can't get date")
